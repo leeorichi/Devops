@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: longlong-lb
+spec:
+  replicas: 3 # number of the pod
+  selector: # The pod selector determining what pods the RC is operating on
+    app: longlong-lb # label value
+  template: # pod template
+    metadata:
+      labels:
+        app: longlong-lb # label value
+    spec:
+      containers:
+      - image: amir20/echotest:latest # image used to run container
+        name: be-api # name of the container
+        ports:
+          - containerPort: 1323 # pod of the container

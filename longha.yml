@@ -1,0 +1,11 @@
+apiVersion: v1 # Descriptor conforms to version v1 of Kubernetes API
+kind: Pod # Select Pod resource
+metadata:
+  name: longhi123 # The name of the pod
+spec:
+  containers:
+    - image: amir20/echotest:latest # Image to create the container
+      name: api1 # The name of the container
+      ports:
+        - containerPort: 1323 # The port the app is listening on 
+          protocol: TCP

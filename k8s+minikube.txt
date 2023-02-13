@@ -1,0 +1,96 @@
+https://kubernetes.io/docs/tutorials/hello-minikube/
+
+1. install kubectl
+2. instal minikube
+
+minikube start --vm-driver=<hypervisor>
+Ex: minikube start --driver=docker
+
+minikube pause [flags]
+minikube unpause [flags] # ngược với pause 
+
+#list flags
+# -A: pause/unpause tất cả namespaces
+# -m: pause/unpause theo namespaces chỉ định
+
+
+
+minikube delete --all
+
+
+
+
+minikube dashboard
+
+kubectl get nodes
+kubectl get pod
+kubectl get services
+
+kubectl create deployment <NAME> --image=image [--dry-run] [options]
+
+kubectl get deployment
+kubectl get replicateset
+kubectl edit deployment <NAME>
+
+
+kubectl expose deployment hello-node --type=LoadBalancer --port=8080
+
+
+kubectl delete pod 
+kubectl delete -n default pod hello-minikube-7474c89846-v5k8n
+
+
+
+
+
+
+============= create 1 cluster 
+create deployment
+minikube kubectl -- create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
+
+config and expose port
+minikube kubectl -- expose deployment hello-minikube --type=NodePort --port=8888
+
+check service
+minikube kubectl get services.
+
+run service
+minikube service hello-minikube
+
+create LB
+(create pod) 
+minikube kubectl -- create deployment longha-lb --image=amir20/echotest:latest
+(expose pod) 
+minikube kubectl -- expose deployment longha-lb --type=LoadBalancer --port=1323
+
+
+
+kubectl describe pod nginx
+kubectl logs hello-redis
+
+
+minikube tunnel
+
+
+kubectl get deployments
+kubectl apply -f hello-service.yaml
+kubectl delete pod hello-redis
+kubectl delete -f hello-service.yaml
+
+kubectl delete service hello-node
+kubectl delete deployment hello-node
+
+kubectl get pod,svc -n kube-system
+
+kubectl edit deployment
+
+kubectl exec -it redis-85d47694f4-tqp9d -c redis -- /bin/bash
+
+
+kubectl port-forward pod/hello-kube 3000:3000
+
+
+kubectl get rc
+kubectl delete rc hello-rc
+
+kubectl expose rs app-1 --port=80 --type=NodePort
