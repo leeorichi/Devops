@@ -94,3 +94,6 @@ kubectl get rc
 kubectl delete rc hello-rc
 
 kubectl expose rs app-1 --port=80 --type=NodePort
+
+
+register free cloud
