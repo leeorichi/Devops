@@ -1,11 +1,58 @@
-apiVersion: v1 # Descriptor conforms to version v1 of Kubernetes API
-kind: Pod # Select Pod resource
+apiVersion: apps/v1 # change version API
+kind: ReplicaSet
 metadata:
-  name: longhi123 # The name of the pod
+  name: longlong-lb
 spec:
-  containers:
-    - image: amir20/echotest:latest # Image to create the container
-      name: api1 # The name of the container
-      ports:
-        - containerPort: 1323 # The port the app is listening on 
-          protocol: TCP
+  replicas: 3 # number of the pod
+  selector: # The pod selector determining what pods the RC is operating on
+    matchLabels:
+      app: longlong-lb # label value
+  template: # pod template
+    metadata:
+      labels:
+        app: longlong-lb # label value
+    spec:
+      containers:
+      - image: amir20/echotest:latest # image used to run container
+        name: be-api # name of the container
+        ports:
+          - containerPort: 1323 # pod of the container 
+
+
+---
+
+apiVersion: apps/v1 # change version API
+kind: ReplicaSet
+metadata:
+  name: longlong-lb-db
+spec:
+  replicas: 3 # number of the pod
+  selector: # The pod selector determining what pods the RC is operating on
+    matchLabels:
+      app: longlong-lb-db # label value
+  template: # pod template
+    metadata:
+      labels:
+        app: longlong-lb-db # label value
+    spec:
+      containers:
+      - image: amir20/echotest:latest # image used to run container
+        name: be-api-db # name of the container
+        ports:
+          - containerPort: 1323 # pod of the container 
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: longlong-lb-db
+  name: longlong-lb-db
+spec:
+  ports:
+    - port: 80
+      targetPort: 1323
+  selector:
+    app: longlong-lb-db
+  type: LoadBalancer
